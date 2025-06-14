@@ -14,6 +14,7 @@ import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.camera.view.PreviewView
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -114,23 +115,34 @@ fun CameraColorPreview() {
         )
     }
 
-    Column(
-        modifier = Modifier.fillMaxSize(),
-        horizontalAlignment = Alignment.CenterHorizontally
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
     ) {
+        // Camera preview view
         AndroidView(
             factory = { previewView },
-            modifier = Modifier
-                .weight(1f)
-                .fillMaxWidth()
+            modifier = Modifier.fillMaxSize()
         )
 
+        // Center point overlay
+        Box(
+            modifier = Modifier
+                .size(16.dp)
+                .align(Alignment.Center)
+                .background(
+                    color = MaterialTheme.colorScheme.primary,
+                    shape = CircleShape
+                )
+        )
+
+        // Color display at the bottom
         Box(
             modifier = Modifier
                 .fillMaxWidth()
                 .height(100.dp)
-                .background(androidx.compose.ui.graphics.Color(centerColor))
-                .padding(16.dp),
+                .align(Alignment.BottomCenter)
+                .background(androidx.compose.ui.graphics.Color(centerColor)),
             contentAlignment = Alignment.Center
         ) {
             val hex = String.format("#%06X", 0xFFFFFF and centerColor)
